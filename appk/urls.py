@@ -25,6 +25,6 @@ urlpatterns = [
     path('api/attendances/history/', AttendanceHistoryView.as_view(), name='attendance-history'),
     path('api/bonuses/history/', BonusHistoryView.as_view(), name='bonus-history'),
     path('api/employees/signup/', EmployeeSignupView.as_view(), name='employee-signup'),
-    path('api/employees/login/', EmployeeLoginView.as_view(), name='employee-login'),
+    path('api/login/', EmployeeLoginView.as_view(), name='employee-login'),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),  # If you want to use DRF's built-in obtain_auth_token view
 ]

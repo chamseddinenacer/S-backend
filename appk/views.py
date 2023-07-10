@@ -122,59 +122,59 @@ class EmployeeRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     parser_classes = [MultiPartParser, FormParser]
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 class DepartmentListCreateView(generics.ListCreateAPIView):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class DepartmentRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class PositionListCreateView(generics.ListCreateAPIView):
     queryset = Position.objects.all()
     serializer_class = PositionSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class PositionRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Position.objects.all()
     serializer_class = PositionSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class AttendanceListCreateView(generics.ListCreateAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class AttendanceRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class BonusListCreateView(generics.ListCreateAPIView):
     queryset = Bonus.objects.all()
     serializer_class = BonusSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class BonusRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Bonus.objects.all()
     serializer_class = BonusSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 
 class EmployeeHistoryView(generics.ListAPIView):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class AttendanceHistoryView(generics.ListAPIView):
     serializer_class = AttendanceSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         employee = self.request.user.employee
@@ -182,7 +182,7 @@ class AttendanceHistoryView(generics.ListAPIView):
 
 class BonusHistoryView(generics.ListAPIView):
     serializer_class = BonusSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         employee = self.request.user.employee
