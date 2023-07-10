@@ -13,10 +13,11 @@ from .serializers import UserSerializer, EmployeeSerializer
 
   
 
-from .models import Employee, Department, Position, Attendance, Bonus
+from .models import Employee, Department, Position, Attendance, Bonus, Role
+
 from .serializers import (
     UserSerializer, EmployeeSerializer, DepartmentSerializer,
-    PositionSerializer, AttendanceSerializer, BonusSerializer,
+    PositionSerializer, AttendanceSerializer, BonusSerializer,RoleSerializer
 )
 
 class EmployeeSignupView(generics.CreateAPIView):
@@ -92,22 +93,6 @@ class EmployeeLoginView(generics.CreateAPIView):
 
  
 
-# class EmployeeLoginView(generics.CreateAPIView):
-#     serializer_class = UserSerializer
-#     permission_classes = [AllowAny]
-
-#     def post(self, request, *args, **kwargs):
-#         serializer = self.get_serializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         user = serializer.validated_data['user']
-
-#         if not user.employee.is_active:
-#             return Response({'detail': 'Your account is not activated yet. Please contact the admin.'}, status=status.HTTP_401_UNAUTHORIZED)
-
-#         token, created = Token.objects.get_or_create(user=user)
-#         return Response({'token': token.key}, status=status.HTTP_200_OK)
- 
- 
  
 
 class EmployeeListCreateView(generics.ListCreateAPIView):
@@ -189,3 +174,12 @@ class BonusHistoryView(generics.ListAPIView):
         return Bonus.objects.filter(employee=employee).order_by('-date')
 
 
+class RoleListCreateView(generics.ListCreateAPIView):
+    queryset = Role.objects.all()
+    serializer_class = RoleSerializer
+    permission_classes = [AllowAny]
+
+class RoleRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Role.objects.all()
+    serializer_class = RoleSerializer
+    permission_classes = [AllowAny]

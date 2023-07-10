@@ -12,6 +12,12 @@ class Position(models.Model):
 
     def __str__(self):
         return self.title
+        
+class Role(models.Model):
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
 
 class Employee(models.Model):
     # GENDER_CHOICES = [
@@ -25,6 +31,7 @@ class Employee(models.Model):
     last_name = models.CharField(max_length=100)
     email = models.EmailField()
     gender = models.CharField(max_length=20,default='')
+    role = models.ForeignKey(Role, on_delete=models.CASCADE)
     mobile = models.CharField(max_length=20,default='')
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
@@ -38,6 +45,7 @@ class Employee(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
 
 
 class Attendance(models.Model):

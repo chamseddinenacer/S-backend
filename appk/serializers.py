@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Employee, Department, Position, Attendance, Bonus
+from .models import Employee, Department, Position, Attendance, Bonus,Role
  
 
 class UserSerializer(serializers.ModelSerializer):
@@ -50,4 +50,10 @@ class AttendanceSerializer(serializers.ModelSerializer):
 class BonusSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bonus
+        fields = '__all__'
+
+
+class RoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Role
         fields = '__all__'

@@ -6,15 +6,22 @@ from .views import (
     AttendanceListCreateView, AttendanceRetrieveUpdateDeleteView,
     BonusListCreateView, BonusRetrieveUpdateDeleteView,
     EmployeeHistoryView, AttendanceHistoryView, BonusHistoryView,
-    EmployeeSignupView, EmployeeLoginView,
+    EmployeeSignupView, EmployeeLoginView,RoleListCreateView,RoleRetrieveUpdateDeleteView
 )
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('api/employees/', EmployeeListCreateView.as_view(), name='employee-list-create'),
     path('api/employees/<int:pk>/', EmployeeRetrieveUpdateDeleteView.as_view(), name='employee-retrieve-update-delete'),
+   
     path('api/departments/', DepartmentListCreateView.as_view(), name='department-list-create'),
     path('api/departments/<int:pk>/', DepartmentRetrieveUpdateDeleteView.as_view(), name='department-retrieve-update-delete'),
+   
+
+    path('api/roles/', RoleListCreateView.as_view(), name='role-list-create'),
+    path('api/roles/<int:pk>/', RoleRetrieveUpdateDeleteView.as_view(), name='role-retrieve-update-delete'),
+   
+
     path('api/positions/', PositionListCreateView.as_view(), name='position-list-create'),
     path('api/positions/<int:pk>/', PositionRetrieveUpdateDeleteView.as_view(), name='position-retrieve-update-delete'),
     path('api/attendances/', AttendanceListCreateView.as_view(), name='attendance-list-create'),
