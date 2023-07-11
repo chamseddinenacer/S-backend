@@ -20,15 +20,12 @@ class Role(models.Model):
         return self.name
 
 class Employee(models.Model):
-    # GENDER_CHOICES = [
-    #     ('M', 'Male'),
-    #     ('F', 'Female'),
-    #     ('O', 'Other'),
-    # ]
+     
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    cin = models.CharField(max_length=20,default='0')
     email = models.EmailField()
     gender = models.CharField(max_length=20,default='')
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
