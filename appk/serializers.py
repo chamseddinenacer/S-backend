@@ -9,33 +9,6 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['username', 'password']
         extra_kwargs = {'password': {'write_only': True}}
 
-class EmployeeSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-
-    class Meta:
-        model = Employee
-        fields = '__all__'  # Inclure tous les champs du modèle Employee
-
-    def create(self, validated_data):
-        user_data = validated_data.pop('user')
-        user = User.objects.create_user(**user_data)
-        employee = Employee.objects.create(user=user, **validated_data)
-        return employee
-    #   fields = ['id', 'user', 'first_name', 'last_name', 'email', 'department', 'position', 'date_of_birth', 'date_of_hire', 'salary','profile_image ', 'is_active']
- 
-
-
-class LeaveRequestSerializer(serializers.ModelSerializer):
-    employee = EmployeeSerializer()
-    class Meta:
-        model = LeaveRequest
-        fields = '__all__'
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        employee = instance.employee
-        employee_data = EmployeeSerializer(employee).data
-        data['employee'] = employee_data
-        return data    
 
  
 class DepartmentSerializer(serializers.ModelSerializer):
@@ -63,3 +36,42 @@ class RoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Role
         fields = '__all__'
+
+
+
+class EmployeeSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    role= RoleSerializer()
+    department= DepartmentSerializer()
+    position= PositionSerializer()
+
+    class Meta:
+        model = Employee
+        fields = '__all__'   
+
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        user = User.objects.create_user(**user_data)
+        employee = Employee.objects.create(user=user, **validated_data)
+        return employee
+  
+    # def to_representation(self, instance):
+    #     data = super().to_representation(instance)
+    #     role = instance.role
+    #     role_data = EmployeeSerializer(role).data
+    #     data['role'] = role_data
+    #     return data  
+
+
+
+class LeaveRequestSerializer(serializers.ModelSerializer):
+    employee = EmployeeSerializer()
+    class Meta:
+        model = LeaveRequest
+        fields = '__all__'
+    # def to_representation(self, instance):
+    #     data = super().to_representation(instance)
+    #     employee = instance.employee
+    #     employee_data = EmployeeSerializer(employee).data
+    #     data['employee'] = employee_data
+    #     return data    
