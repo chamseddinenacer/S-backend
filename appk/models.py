@@ -54,7 +54,16 @@ class Employee(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 
+class LeaveRequest(models.Model):
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    reason = models.CharField(max_length=100)
+    nbjour = models.PositiveIntegerField(blank=True, null=True)
+    status = models.CharField(max_length=20, default='Pending')
 
+
+    
 class Attendance(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     date = models.DateField()

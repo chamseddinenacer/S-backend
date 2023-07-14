@@ -1,16 +1,18 @@
-from django.urls import path
-from .views import (
-    EmployeeListCreateView, EmployeeRetrieveUpdateDeleteView,
-    DepartmentListCreateView, DepartmentRetrieveUpdateDeleteView,
-    PositionListCreateView, PositionRetrieveUpdateDeleteView,
-    AttendanceListCreateView, AttendanceRetrieveUpdateDeleteView,
-    BonusListCreateView, BonusRetrieveUpdateDeleteView,
-    EmployeeHistoryView, AttendanceHistoryView, BonusHistoryView,
-    EmployeeSignupView, EmployeeLoginView,RoleListCreateView,RoleRetrieveUpdateDeleteView
-)
+from django.urls import path,include
+from .views import  *
 from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework import routers
+
+
+
+router = routers.DefaultRouter()
+router.register('leave-requests', LeaveRequestViewSet)
+
 
 urlpatterns = [
+    
+    path('api/', include(router.urls)),
+
     path('api/employees/', EmployeeListCreateView.as_view(), name='employee-list-create'),
     path('api/employees/<int:pk>/', EmployeeRetrieveUpdateDeleteView.as_view(), name='employee-retrieve-update-delete'),
    

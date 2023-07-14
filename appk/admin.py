@@ -1,9 +1,13 @@
 from django.contrib import admin
-from .models import Employee, Department, Position, Attendance, Bonus,Role
+from .models import *
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
     list_display = ['name']
+
+@admin.register(LeaveRequest)
+class LeaveRequestAdmin(admin.ModelAdmin):
+    list_display = ['start_date']
 
 @admin.register(Role)
 class RoleAdmin(admin.ModelAdmin):

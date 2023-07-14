@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Employee, Department, Position, Attendance, Bonus,Role
+from .models import Employee, Department, Position, Attendance, Bonus,Role,LeaveRequest
  
 
 class UserSerializer(serializers.ModelSerializer):
@@ -24,14 +24,20 @@ class EmployeeSerializer(serializers.ModelSerializer):
     #   fields = ['id', 'user', 'first_name', 'last_name', 'email', 'department', 'position', 'date_of_birth', 'date_of_hire', 'salary','profile_image ', 'is_active']
  
 
+
+class LeaveRequestSerializer(serializers.ModelSerializer):
+    employee = EmployeeSerializer()
+    class Meta:
+        model = LeaveRequest
+        fields = '__all__'
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        employee = instance.employee
+        employee_data = EmployeeSerializer(employee).data
+        data['employee'] = employee_data
+        return data    
+
  
-         
-
-
-
-
-
-
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department

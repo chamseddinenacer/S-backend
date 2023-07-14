@@ -1,4 +1,4 @@
-from rest_framework import generics, status
+from rest_framework import generics, status , viewsets
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
 from rest_framework.parsers import MultiPartParser, FormParser
  
+
 
  
 from django.contrib.auth import authenticate
@@ -15,10 +16,7 @@ from .serializers import UserSerializer, EmployeeSerializer
 
 from .models import Employee, Department, Position, Attendance, Bonus, Role
 
-from .serializers import (
-    UserSerializer, EmployeeSerializer, DepartmentSerializer,
-    PositionSerializer, AttendanceSerializer, BonusSerializer,RoleSerializer
-)
+from .serializers import  *
 
 class EmployeeSignupView(generics.CreateAPIView):
     serializer_class = EmployeeSerializer
@@ -108,6 +106,18 @@ class EmployeeRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
     permission_classes = [AllowAny]
+
+
+
+class LeaveRequestViewSet(viewsets.ModelViewSet):
+    queryset = LeaveRequest.objects.all()
+    serializer_class = LeaveRequestSerializer
+
+ 
+
+
+
+
 
 
 class DepartmentListCreateView(generics.ListCreateAPIView):
