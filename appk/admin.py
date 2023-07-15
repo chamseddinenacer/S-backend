@@ -7,7 +7,7 @@ class DepartmentAdmin(admin.ModelAdmin):
 
 @admin.register(LeaveRequest)
 class LeaveRequestAdmin(admin.ModelAdmin):
-    list_display = ['start_date']
+    list_display = ['status']
 
 @admin.register(Role)
 class RoleAdmin(admin.ModelAdmin):

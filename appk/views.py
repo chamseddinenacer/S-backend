@@ -130,9 +130,18 @@ class EmployeeCreateView(APIView):
         else:
             return Response(employee_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+from rest_framework.decorators import api_view
 
-
-
+@api_view(['GET'])
+def leave_requests_by_employee(request, employee_id):
+    try:
+        leave_requests = LeaveRequest.objects.filter(employee=employee_id)
+        serializer = LeaveRequestSerializer(leave_requests, many=True)
+        return Response(serializer.data, status=200)
+    except LeaveRequest.DoesNotExist:
+        return Response({'message': 'No leave requests found for the specified employee ID.'}, status=404)
+    except Exception as e:
+        return Response({'message': str(e)}, status=500)
 
 
 class EmployeeRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
@@ -147,7 +156,22 @@ class LeaveRequestViewSet(viewsets.ModelViewSet):
     queryset = LeaveRequest.objects.all()
     serializer_class = LeaveRequestSerializer
 
- 
+ # Mettez à jour le statut de la demande de congé
+class LeaveRequestStatusUpdateView(APIView):
+    def post(self, request, pk):
+        try:
+            leave_request = LeaveRequest.objects.get(pk=pk)
+            status = request.data.get('status')
+
+            # Mettez à jour le statut de la demande de congé
+            leave_request.status = status
+            leave_request.save()
+            from rest_framework import status
+            return Response({'message': 'Statut mis à jour avec succès.'}, status=status.HTTP_200_OK)
+        except LeaveRequest.DoesNotExist:
+            return Response({'message': 'La demande de congé spécifiée n\'existe pas.'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 

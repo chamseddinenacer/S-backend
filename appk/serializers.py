@@ -77,9 +77,9 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = LeaveRequest
         fields = '__all__'
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        employee = instance.employee
-        employee_data = EmployeeSerializer(employee).data
-        data['employee'] = employee_data
-        return data    
+    # def to_representation(self, instance):
+    #     data = super().to_representation(instance)
+    #     employee = instance.employee
+    #     employee_data = EmployeeSerializer(employee).data
+    #     data['employee'] = employee_data
+    #     return data    
