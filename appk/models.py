@@ -29,7 +29,7 @@ class Employee(models.Model):
     cin = models.CharField(max_length=20)
     email = models.EmailField()
     gender = models.CharField(max_length=20)
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+  
     mobile = models.CharField(max_length=20)
     date_of_birth = models.DateField()
     address = models.CharField(max_length=255)
@@ -40,12 +40,24 @@ class Employee(models.Model):
 
     # Poste d'employee
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE)
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
+
     salary = models.DecimalField(max_digits=8, decimal_places=2)
     date_of_hire = models.DateField()
     experience = models.CharField(max_length=255)
     type_of_contrat = models.CharField(max_length=20)
     date_of_out = models.DateField()
+
+
+    def get_department_name(self):
+        return self.department.name
+
+    def get_role_name(self):
+        return self.role.name
+
+    def get_position_title(self):
+        return self.position.title
     
 
 

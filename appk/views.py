@@ -99,6 +99,40 @@ class EmployeeListCreateView(generics.ListCreateAPIView):
     # permission_classes = [IsAuthenticated]
     permission_classes = [AllowAny]
 
+from rest_framework.views import APIView
+
+
+class EmployeeCreateView(APIView):
+    def post(self, request):
+        employee_serializer = EmployeeSerializer(data=request.data)
+        if employee_serializer.is_valid():
+            employee = employee_serializer.save()
+
+            # Récupérer les objets associés
+            role = Role.objects.get(id=request.data['role'])
+            department = Department.objects.get(id=request.data['department'])
+            position = Position.objects.get(id=request.data['position'])
+
+            # Sérialiser les objets associés
+            role_serializer = RoleSerializer(role)
+            department_serializer = DepartmentSerializer(department)
+            position_serializer = PositionSerializer(position)
+
+            # Ajouter les objets sérialisés à la réponse JSON
+            response_data = {
+                'employee': employee_serializer.data,
+                'role': role_serializer.data,
+                'department': department_serializer.data,
+                'position': position_serializer.data
+            }
+
+            return Response(response_data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(employee_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
 
 
 class EmployeeRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
