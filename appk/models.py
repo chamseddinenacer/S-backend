@@ -68,12 +68,22 @@ class Employee(models.Model):
 
 class LeaveRequest(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+ 
     start_date = models.DateField()
     end_date = models.DateField()
     reason = models.CharField(max_length=100)
     leave_type = models.CharField(max_length=100,default='')
     nbjour = models.PositiveIntegerField(blank=True, null=True)
     status = models.CharField(max_length=20, default='Pending')
+
+    # def add_employee_detail(self):
+    #     return self.employee.first_name    
+    # def get_employee_last_name(self):
+    #     return self.employee.last_name  
+    # def get_employee_cin(self):
+    #     return self.employee.cin  
+    # def get_employee_profile_image(self):
+    #     return self.employee.profile_image
 
 
     

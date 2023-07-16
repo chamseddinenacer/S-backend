@@ -151,11 +151,26 @@ class EmployeeRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [AllowAny]
 
 
-
 class LeaveRequestViewSet(viewsets.ModelViewSet):
     queryset = LeaveRequest.objects.all()
     serializer_class = LeaveRequestSerializer
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        
+        # Récupérer l'instance créée
+        instance = serializer.instance
+        
+        # Récupérer l'employé associé à l'instance
+        employee = instance.employee
+        
+        # Sérialiser la demande de congé avec le détail de l'employé
+        response_serializer = LeaveRequestSerializer(instance, context=self.get_serializer_context())
+        
+        return Response(response_serializer.data, status=status.HTTP_201_CREATED)
+ 
  # Mettez à jour le statut de la demande de congé
 class LeaveRequestStatusUpdateView(APIView):
     def post(self, request, pk):

@@ -71,15 +71,31 @@ class EmployeeSerializer(serializers.ModelSerializer):
         return employee
   
   
-
 class LeaveRequestSerializer(serializers.ModelSerializer):
-    employee = EmployeeSerializer()
+    employee = serializers.PrimaryKeyRelatedField(queryset=Employee.objects.all())
+
     class Meta:
         model = LeaveRequest
         fields = '__all__'
-    # def to_representation(self, instance):
-    #     data = super().to_representation(instance)
-    #     employee = instance.employee
-    #     employee_data = EmployeeSerializer(employee).data
-    #     data['employee'] = employee_data
-    #     return data    
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        employee = instance.employee
+        employee_serializer = EmployeeSerializer(employee)
+        representation['employee'] = employee_serializer.data
+        return representation
+
+        
+
+    # def get_employee_first_name(self, obj):
+    #     return obj.get_employee_first_name()
+
+    # def get_employee_last_name(self, obj):
+    #     return obj.get_employee_last_name()
+
+    # def get_employee_cin(self, obj):
+    #     return obj.get_employee_cin()
+
+    # def get_employee_profile_image(self, obj):
+    #     return obj.get_employee_profile_image()
+   
