@@ -11,6 +11,8 @@ router.register('leave-requests', LeaveRequestViewSet)
 
 urlpatterns = [
     
+    path('api/email/', createmail, name='employee-list-cr'),
+
     path('api/', include(router.urls)),
     path('api/leave-requests/<int:pk>/status/', LeaveRequestStatusUpdateView.as_view(), name='leaveStatus'),
     # path('api/leave-requests/', LeaveRequestViewSet.as_view(), name='leave'),
