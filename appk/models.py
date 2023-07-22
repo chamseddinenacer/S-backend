@@ -90,8 +90,8 @@ class LeaveRequest(models.Model):
 class Attendance(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     date = models.DateField()
-    status = models.CharField(max_length=10, choices=[('Present', 'Present'), ('Absent', 'Absent')])
-    is_present = models.BooleanField(default=False)
+    # status = models.CharField(max_length=10, choices=[('Present', 'Present'), ('Absent', 'Absent')])
+    is_Absent = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.employee} - {self.date}"

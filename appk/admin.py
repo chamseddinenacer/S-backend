@@ -25,7 +25,7 @@ class EmployeeAdmin(admin.ModelAdmin):
 
 @admin.register(Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
-    list_display = ['employee', 'date', 'is_present']
+    list_display = ['employee', 'date', 'is_Absent']
     list_filter = ['employee', 'date']
     search_fields = ['employee__first_name', 'employee__last_name', 'date']
 
