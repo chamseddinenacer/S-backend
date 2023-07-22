@@ -22,9 +22,18 @@ class PositionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class AttendanceSerializer(serializers.ModelSerializer):
+    employee = serializers.PrimaryKeyRelatedField(queryset=Employee.objects.all())
     class Meta:
         model = Attendance
         fields = '__all__'
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        employee = instance.employee
+        employee_serializer = EmployeeSerializer(employee)
+        representation['employee'] = employee_serializer.data
+        return representation
+        
+            
 
 class BonusSerializer(serializers.ModelSerializer):
     class Meta:

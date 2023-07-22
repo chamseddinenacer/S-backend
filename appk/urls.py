@@ -34,9 +34,14 @@ urlpatterns = [
     path('api/positions/', PositionListCreateView.as_view(), name='position-list-create'),
     path('api/positions/<int:pk>/', PositionRetrieveUpdateDeleteView.as_view(), name='position-retrieve-update-delete'),
     
+    
     path('api/attendances/', AttendanceListCreateView.as_view(), name='attendance-list-create'),
     path('api/attendances/<int:pk>/', AttendanceRetrieveUpdateDeleteView.as_view(), name='attendance-retrieve-update-delete'),
- 
+    path('api/attendances/<int:employee_id>/att/',Attenad_by_employee, name='Attenad_by_employee'),
+
+
+
+
     path('api/bonuses/', BonusListCreateView.as_view(), name='bonus-list-create'),
     path('api/bonuses/<int:pk>/', BonusRetrieveUpdateDeleteView.as_view(), name='bonus-retrieve-update-delete'),
     path('api/employees/history/', EmployeeHistoryView.as_view(), name='employee-history'),

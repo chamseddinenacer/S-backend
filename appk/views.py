@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
 from rest_framework.parsers import MultiPartParser, FormParser
  
-
+from rest_framework.generics import ListAPIView, get_object_or_404
 
  
 from django.contrib.auth import authenticate
@@ -151,6 +151,8 @@ class EmployeeCreateView(APIView):
 
 from rest_framework.decorators import api_view
 
+
+
 @api_view(['GET'])
 def leave_requests_by_employee(request, employee_id):
     try:
@@ -203,6 +205,7 @@ class DepartmentListCreateView(generics.ListCreateAPIView):
     serializer_class = DepartmentSerializer
     permission_classes = [AllowAny]
 
+
 class DepartmentRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
@@ -227,6 +230,33 @@ class AttendanceRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
     permission_classes = [AllowAny]
+
+
+
+
+
+@api_view(['GET'])
+def Attenad_by_employee(request, employee_id):
+    try:
+        # Attenad = Attendance.objects.filter(employee=employee_id)
+        # serializer = LeaveRequestSerializer(Attenad, many=True)
+        Attenad = get_object_or_404(Attendance , employee=employee_id)
+        Attenad.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    except Attendance.DoesNotExist:
+        return Response({'message': 'No Attendance requests found for the specified employee ID.'}, status=404)
+    except Exception as e:
+        return Response({'message': str(e)}, status=500)
+
+
+
+
+
+
+
+
+
+
 
 class BonusListCreateView(generics.ListCreateAPIView):
     queryset = Bonus.objects.all()
