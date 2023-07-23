@@ -37,7 +37,8 @@ urlpatterns = [
     
     path('api/attendances/', AttendanceListCreateView.as_view(), name='attendance-list-create'),
     path('api/attendances/<int:pk>/', AttendanceRetrieveUpdateDeleteView.as_view(), name='attendance-retrieve-update-delete'),
-    path('api/attendances/<int:employee_id>/att/',Attenad_by_employee, name='Attenad_by_employee'),
+    path('api/attendances/<int:employee_id>/att/',delete_Attenad_by_employee, name='Attenad_by_employee'),
+    path('api/attendances/<int:employee_id>/empl/',Attenad_by_employee, name='Attenad_by_employee'),
 
 
 

@@ -48,6 +48,41 @@ class RoleSerializer(serializers.ModelSerializer):
 
  
 
+
+
+class EmployeeUpSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    # role= RoleSerializer()
+    # department= DepartmentSerializer()
+    # position= PositionSerializer()
+    department_name = serializers.SerializerMethodField()
+    role_name = serializers.SerializerMethodField()
+    position_title = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Employee
+        fields = '__all__'   
+
+    def get_department_name(self, obj):
+        return obj.get_department_name()
+
+    def get_role_name(self, obj):
+        return obj.get_role_name()
+
+    def get_position_title(self, obj):
+        return obj.get_position_title()
+
+
+
+
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        user = User.objects.create_user(**user_data)
+        employee = Employee.objects.create(user=user, **validated_data)
+        return employee
+  
+
+
 class EmployeeSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     # role= RoleSerializer()

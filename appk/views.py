@@ -105,13 +105,6 @@ class EmployeeLoginView(generics.CreateAPIView):
 
 
 
-
-
-
- 
-
- 
-
 class EmployeeListCreateView(generics.ListCreateAPIView):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
@@ -165,11 +158,22 @@ def leave_requests_by_employee(request, employee_id):
         return Response({'message': str(e)}, status=500)
 
 
+# class EmployeeRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
+#     parser_classes = [MultiPartParser, FormParser]
+#     queryset = Employee.objects.all()
+#     serializer_class = EmployeeSerializer
+#     permission_classes = [AllowAny]
+
 class EmployeeRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     parser_classes = [MultiPartParser, FormParser]
     queryset = Employee.objects.all()
-    serializer_class = EmployeeSerializer
+    serializer_class = EmployeeUpSerializer
     permission_classes = [AllowAny]
+    
+
+
+
+
 
 
 class LeaveRequestViewSet(viewsets.ModelViewSet):
@@ -236,7 +240,7 @@ class AttendanceRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
 
 
 @api_view(['GET'])
-def Attenad_by_employee(request, employee_id):
+def delete_Attenad_by_employee(request, employee_id):
     try:
         # Attenad = Attendance.objects.filter(employee=employee_id)
         # serializer = LeaveRequestSerializer(Attenad, many=True)
@@ -248,6 +252,18 @@ def Attenad_by_employee(request, employee_id):
     except Exception as e:
         return Response({'message': str(e)}, status=500)
 
+ 
+
+@api_view(['GET'])
+def Attenad_by_employee(request, employee_id):
+    try:
+        attendance = Attendance.objects.filter(employee=employee_id)
+        serializer = AttendanceSerializer(attendance, many=True)
+        return Response(serializer.data, status=200)
+    except LeaveRequest.DoesNotExist:
+        return Response({'message': 'No attendance found for the specified employee ID.'}, status=404)
+    except Exception as e:
+        return Response({'message': str(e)}, status=500)
 
 
 
