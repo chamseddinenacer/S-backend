@@ -340,8 +340,8 @@ class EnvoyerSMS_AddEmploye(APIView):
         # SMS_pass = 'chamsa12345'
 
         # Vos informations d'identification Twilio
-        account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
-        auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
+        # account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
+        # auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
 
         # Initialiser le client Twilio
         client = Client(account_sid, auth_token)
@@ -370,8 +370,8 @@ class EnvoyerSMS_Rest_Pass(APIView):
         recipient_list = request.data.get('recipient_list')
         SMS_verification = request.data.get('codesms')
         # SMS_verification = str(randint(100000,999999))
-        account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
-        auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
+        # account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
+        # auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
       
 
         client = Client(account_sid, auth_token)
@@ -502,8 +502,8 @@ class Send_SMS_To_Admin(APIView):
 
 
         # Vos informations d'identification Twilio
-        account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
-        auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
+        # account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
+        # auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
 
         # Initialiser le client Twilio
         client = Client(account_sid, auth_token)
@@ -548,8 +548,8 @@ class Send_SMS_Accept_To_Employe(APIView):
         recipient_list = request.data.get('recipient_list')
  
         # Vos informations d'identification Twilio
-        account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
-        auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
+        # account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
+        # auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
 
         # Initialiser le client Twilio
         client = Client(account_sid, auth_token)
@@ -592,8 +592,8 @@ class Send_SMS_Rejecte_To_Employe(APIView):
         recipient_list = request.data.get('recipient_list')
  
         # Vos informations d'identification Twilio
-        account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
-        auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
+        # account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
+        # auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
 
         # Initialiser le client Twilio
         client = Client(account_sid, auth_token)
