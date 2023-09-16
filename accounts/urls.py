@@ -23,6 +23,10 @@ urlpatterns = [
     path('images/<int:idimage>/', get_image, name='get_image'),
     path('delimage/<int:idimage>/', ImageDeleteView.as_view(), name='image-delete'),
 
+
+
+    path('api/smsAddEmploye/',EnvoyerSMS_AddEmployes.as_view(), name='envoyer-sms'),
+
 ]
 
  

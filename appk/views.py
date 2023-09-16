@@ -317,3 +317,305 @@ class RoleRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
     permission_classes = [AllowAny]
+
+
+
+
+
+
+
+from twilio.rest import Client
+ 
+
+class EnvoyerSMS_AddEmploye(APIView):
+
+    def post(self, request):
+
+        # Récupérer les données de la requête
+        recipient_list = request.data.get('recipient_list')
+        SMS_username = request.data.get('username')
+        SMS_pass = request.data.get('password')
+        # recipient_list = "29225523"
+        # SMS_username = 'chamsaa'
+        # SMS_pass = 'chamsa12345'
+
+        # Vos informations d'identification Twilio
+        account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
+        auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
+
+        # Initialiser le client Twilio
+        client = Client(account_sid, auth_token)
+
+        # Construire le message avec les données de l'employé
+        message_body = f"\n\nCher/Chère employé,\n\nVotre compte a été prêt :\n- Username : {SMS_username}\n- Password : {SMS_pass}\n\nConnectez-vous à: \n [https://ria-box.netlify.app/] \n pour accéder à votre compte.\n\nSi vous avez des questions ou avez besoin d'aide, contactez notre équipe de support au: \n [+216 29225523].\n\nBienvenue et profitez de votre expérience !\n\nCordialement,\n [CHAMSEDDINE NACER]"
+
+        # Envoyer le SMS
+        message = client.messages.create(
+            body=message_body,
+            from_='+19209455841',  # Numéro Twilio autorisé
+            # to = '+216' + str(recipient_list)   
+            to = '+216' + str(recipient_list)
+        )
+
+        return Response({'message': 'SMS envoyé avec succès !'})
+
+
+
+# send sms code for reset password 
+
+class EnvoyerSMS_Rest_Pass(APIView):
+
+    def post(self, request):
+
+        recipient_list = request.data.get('recipient_list')
+        SMS_verification = request.data.get('codesms')
+        # SMS_verification = str(randint(100000,999999))
+        account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
+        auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
+      
+
+        client = Client(account_sid, auth_token)
+
+        nbtt = '+48' + str(recipient_list)
+        print(nbtt)
+        message = client.messages \
+            .create(
+                body='\nYour secret code for Stagi reset Password is: '+SMS_verification,
+                from_ =  '+19209455841',
+                to = '+216' + str(recipient_list)
+
+                
+            )
+
+        return Response({'message': 'SMS envoyé avec succès !'})
+
+
+
+# Get data (code sms , new password ) and change & saved it 
+
+class PasswordResetBySms(APIView):
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        token = request.data.get('token')
+        new_password = request.data.get('new_password')
+
+        print('le tokeeennn est ' + token)
+        print('le paaasss est ' + new_password)
+
+        if not token or not new_password:
+            return Response({'detail': 'Token and new password are required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        employee = Employee.objects.get(codesms=token)
+        user = employee.user
+        
+         
+        print(employee)
+        
+
+       
+        new_user=''
+        if user is not None:
+
+            print("sdddsdsdsdssss")
+             
+            user.set_password(new_password)
+            
+            employee.codesms=new_user
+            print("t7att l mot jdid")
+            user.save()
+            employee.save()
+            
+            print("save mot jdid")
+            # employee.delete()
+
+
+
+            return Response({'detail': 'Password reset successful.'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'detail': 'user not found.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+ 
+# Update code sms v1 Employé
+
+class Updatecode(APIView):
+
+    def put(self, request, vpt):
+        try:
+            employe = Employee.objects.get(mobile=vpt)
+            print('employe',employe)
+
+
+        except Employee.DoesNotExist:
+            return Response({'error': 'Employee not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        print('request.data: e jdida',request.data)
+        serializer = UpdateEmplyecodeSerializer(employe, data=request.data)
+        if serializer.is_valid():
+            print('serializer.is_valid')
+            serializer.save()
+        return Response(serializer.data)
+
+
+ 
+# Update code sms v2 User
+
+
+class Updatecode2(APIView):
+
+    def put(self, request, vpt):
+        try:
+            user = User.objects.get(last_name=vpt)
+            print('user',user)
+
+
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        print('request.data: e jdida',request.data)
+        serializer = UpdateUsercodeSerializer(user, data=request.data)
+        if serializer.is_valid():
+            print('serializer.is_valid')
+            serializer.save()
+        return Response(serializer.data)
+
+
+
+
+
+# Send sms to ADMIN when the employe add congé 
+
+class Send_SMS_To_Admin(APIView):
+
+    def post(self, request):
+
+        # Récupérer les données de la requête
+        # recipient_list = request.data.get('recipient_list')
+
+        SMS_username = request.data.get('username')
+        SMS_last_name = request.data.get('last_name')
+        SMS_mobile = request.data.get('mobile')
+        # SMS_pass = request.data.get('password')
+
+        num_admin = "29225523"
+
+
+        # Vos informations d'identification Twilio
+        account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
+        auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
+
+        # Initialiser le client Twilio
+        client = Client(account_sid, auth_token)
+
+        # Construire le message avec les données de l'employé
+        message_alerte_conge = f"""
+        Demande de congé reçue :
+
+        Nom de l'employé : {SMS_username}
+        Prenom de l'employé : {SMS_last_name}
+        Numéro de téléphone : {SMS_mobile}
+
+        L'employé {SMS_username} a soumis une demande de congé. Veuillez prendre en considération cette demande.
+
+        Cordialement,
+        [ CHAMSEDDINE NACER ]
+        """
+
+
+        # Envoyer le SMS
+        message = client.messages.create(
+            body=message_alerte_conge,
+            from_='+19209455841',  # Numéro Twilio autorisé
+            # to = '+216' + str(recipient_list)   
+            to = '+216' + str(num_admin)
+        )
+
+        return Response({'message': 'SMS envoyé avec succès !'})
+
+
+
+
+
+
+# Send sms TO Employe when the admin ACCEPTED congé 
+
+class Send_SMS_Accept_To_Employe(APIView):
+
+    def post(self, request):
+
+        # Récupérer les données de la requête
+        recipient_list = request.data.get('recipient_list')
+ 
+        # Vos informations d'identification Twilio
+        account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
+        auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
+
+        # Initialiser le client Twilio
+        client = Client(account_sid, auth_token)
+
+        # Construire le message avec les données de l'employé
+        message_acceptation = f"""
+        Cher/Chére Employé,
+
+        Nous sommes heureux de vous informer que votre demande de congé a été acceptée.
+
+        Vous pouvez désormais profiter de votre congé aux dates demandées en toute tranquillité.
+
+        Cordialement,
+        [ CHAMSEDDINE NACER ]
+        """
+
+
+        # Envoyer le SMS
+        message = client.messages.create(
+            body=message_acceptation,
+            from_='+19209455841',  # Numéro Twilio autorisé
+            # to = '+216' + str(recipient_list)   
+            to = '+216' + str(recipient_list)
+        )
+
+        return Response({'message': 'SMS envoyé avec succès !'})
+
+
+
+
+
+
+# Send sms TO Employe when the admin REJECTED congé 
+
+class Send_SMS_Rejecte_To_Employe(APIView):
+
+    def post(self, request):
+
+        # Récupérer les données de la requête
+        recipient_list = request.data.get('recipient_list')
+ 
+        # Vos informations d'identification Twilio
+        account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
+        auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
+
+        # Initialiser le client Twilio
+        client = Client(account_sid, auth_token)
+
+        # Construire le message avec les données de l'employé
+        message_acceptation = f"""
+        Cher/Chére Employé,
+
+        Nous sommes désolés de vous informer que votre demande de congé a été refusée.
+        Si vous avez des questions ou des préoccupations, n'hésitez pas à nous contacter a : \n [+216 29225523]..
+
+        Cordialement,
+        [ CHAMSEDDINE NACER ]
+        """
+
+
+        # Envoyer le SMS
+        message = client.messages.create(
+            body=message_acceptation,
+            from_='+19209455841',  # Numéro Twilio autorisé
+            # to = '+216' + str(recipient_list)   
+            to = '+216' + str(recipient_list)
+        )
+
+        return Response({'message': 'SMS envoyé avec succès !'})

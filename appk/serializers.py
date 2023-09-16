@@ -82,6 +82,10 @@ class EmployeeUpSerializer(serializers.ModelSerializer):
         return employee
   
 
+class UpdateEmplyecodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Employee
+        fields = ('id','codesms')
 
 class EmployeeSerializer(serializers.ModelSerializer):
     user = UserSerializer()

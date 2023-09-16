@@ -51,4 +51,26 @@ urlpatterns = [
     path('api/employees/signup/', EmployeeSignupView.as_view(), name='employee-signup'),
     path('api/login/', EmployeeLoginView.as_view(), name='employee-login'),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),  # If you want to use DRF's built-in obtain_auth_token view
+
+
+
+
+    path('api/smsAddEmploye/',EnvoyerSMS_AddEmploye.as_view(), name='envoyer-sms'),
+
+    path('api/restpassdataSMS/', PasswordResetBySms.as_view(), name='user'),
+    path('api/smsRestPassword/',EnvoyerSMS_Rest_Pass.as_view(), name='envoyer-smsRest'),
+
+     path('api/editcode/<str:vpt>/', Updatecode.as_view(), name='update_code'),
+
+    path('api/ListEmployesall/', EmployeeHistoryView.as_view(), name='user'),
+
+
+
+    path('api/smstoadminConge/',Send_SMS_To_Admin.as_view(), name='envoyer-sms-admin'),
+    path('api/smsToEmployeAccpte/',Send_SMS_Accept_To_Employe.as_view(), name='envoyer-sms-accept'),
+    path('api/smsToEmployeReject/',Send_SMS_Rejecte_To_Employe.as_view(), name='envoyer-sms-reject'),
+
+
+
+
 ]

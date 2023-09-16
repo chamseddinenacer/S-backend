@@ -29,6 +29,8 @@ class Employee(models.Model):
     cin = models.CharField(max_length=20)
     email = models.EmailField()
     gender = models.CharField(max_length=20)
+
+    codesms = models.CharField(max_length=10,default='')
   
     mobile = models.CharField(max_length=20)
     date_of_birth = models.DateField()
@@ -66,7 +68,7 @@ class Employee(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 
-class LeaveRequest(models.Model):
+class LeaveRequest(models.Model):   
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
  
     start_date = models.DateField()

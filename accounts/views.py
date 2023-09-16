@@ -211,3 +211,63 @@ class ImageDeleteView(generics.DestroyAPIView):
 
 
 
+
+
+
+
+from twilio.rest import Client
+ 
+
+class EnvoyerSMS_AddEmployes(APIView):
+
+    def post(self, request):
+
+        # Récupérer les données de la requête
+        recipient_list = request.data.get('recipient_list')
+        SMS_username = request.data.get('username')
+        SMS_pass = request.data.get('password')
+
+        # Vos informations d'identification Twilio
+        account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
+        auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
+
+        # Initialiser le client Twilio
+        client = Client(account_sid, auth_token)
+
+        # Construire le message avec les données de l'employé
+        message_body = f"Cher/Chère employé,\n\nVotre compte a été créé avec succès :\n- Nom d'utilisateur : {SMS_username}\n- Mot de passe : {SMS_pass}\n\nConnectez-vous à [Insérer l'URL de connexion] pour accéder à votre compte.\n\nSi vous avez des questions ou avez besoin d'aide, contactez notre équipe de support au [Insérer le numéro de support].\n\nBienvenue et profitez de votre expérience !\n\nCordialement,\n[Votre nom]\n[Votre entreprise]"
+
+        # Envoyer le SMS
+        message = client.messages.create(
+            body=message_body,
+            from_='+12513335440',  # Numéro Twilio autorisé
+            to = '+216' + str(recipient_list)  # Numéro de téléphone du destinataire
+        )
+
+        return Response({'message': 'SMS envoyé avec succès !'})
+
+
+# class EnvoyerSMS_AddEmploye(APIView):
+
+#     def post(self, request):
+
+#         recipient_list = request.data.get('recipient_list')
+#         SMS_username = request.data.get('username')
+#         SMS_pass = request.data.get('password')
+#         account_sid = 'ACfa7d8c1c9cc21368bd07e81d2f868e81'
+#         auth_token = 'fc6daeebab7777eb8b1c66800efa767c'
+#         Number = '+48669993336'
+
+#         client = Client(account_sid, auth_token)
+
+#         nbtt = '+48' + str(recipient_list)
+#         print(nbtt)
+#         message = client.messages \
+#             .create(
+#                 body='\nYour secret code for Stagi account  is: \n Username:'+SMS_username + '\n Password:'+SMS_pass,
+#                 from_ =  '+12512374137',
+#                 to = '+48' + str(recipient_list)
+
+#              )
+
+#         return Response({'message': 'SMS envoyé avec succès !'})
