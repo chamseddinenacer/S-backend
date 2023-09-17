@@ -391,9 +391,9 @@ class EnvoyerSMS_Rest_Pass(APIView):
 
 
 
-# Get data (code sms , new password ) and change & saved it 
+# Get data(code sms , new password ) and change & saved it 
 
-class PasswordResetBySms(APIView):
+class PasswordResetBySms(APIView): 
     permission_classes = (AllowAny,)
 
     def post(self, request):
@@ -619,3 +619,54 @@ class Send_SMS_Rejecte_To_Employe(APIView):
         )
 
         return Response({'message': 'SMS envoyé avec succès !'})
+
+
+
+
+
+
+
+
+# Change password by employe 
+
+class Change_Password_Employe(APIView): 
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        mobile = request.data.get('mobile')
+        new_password = request.data.get('new_password')
+
+        print('le mobile est ' + mobile)
+        print('le paaasss est ' + new_password)
+
+        if not mobile or not new_password:
+            return Response({'detail': 'mobile and new password are required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        employee = Employee.objects.get(mobile=mobile)
+        user = employee.user
+        
+         
+        print(employee)
+        
+
+       
+        new_user=''
+        if user is not None:
+
+            print("sdddsdsdsdssss")
+             
+            user.set_password(new_password)
+            
+         
+            print("t7att l mot jdid")
+            user.save()
+            employee.save()
+            
+            print("save mot jdid")
+            # employee.delete()
+
+
+
+            return Response({'detail': 'Password reset successful.'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'detail': 'user not found.'}, status=status.HTTP_400_BAD_REQUEST)

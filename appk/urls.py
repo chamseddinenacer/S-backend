@@ -71,6 +71,10 @@ urlpatterns = [
     path('api/smsToEmployeReject/',Send_SMS_Rejecte_To_Employe.as_view(), name='envoyer-sms-reject'),
 
 
+# Change password 
+
+    path('api/Change_Password_Employe/', Change_Password_Employe.as_view(), name='user'),
+
 
 
 ]
