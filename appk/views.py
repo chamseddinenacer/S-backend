@@ -670,3 +670,47 @@ class Change_Password_Employe(APIView):
             return Response({'detail': 'Password reset successful.'}, status=status.HTTP_200_OK)
         else:
             return Response({'detail': 'user not found.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+
+class activeaccountEmp(APIView):
+    def get(self, request, id):
+        employee = get_object_or_404(Employee, id=id)
+        user = employee.user
+        if user is not None:
+            print("sdddsdsdsdssss")
+            user.is_active = True
+            user.save()
+            emply.save()
+            serializer = EmployeeSerializer(emply)
+
+            return Response(serializer.data)
+        else:
+            return Response({'detail': 'user not found.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class closeAccountEmp(APIView):
+    def get(self, request, id):
+        employee = get_object_or_404(Employee, id=id)
+        user = employee.user
+        if user is not None:
+            print("sdddsdsdsdssss")
+            user.is_active = False
+            user.save()
+            employee.save()
+            serializer = EmployeeSerializer(employee)
+
+            return Response(serializer.data)
+        else:
+            return Response({'detail': 'user not found.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class EmployeeDetails(generics.RetrieveUpdateDestroyAPIView):
+    parser_classes = [MultiPartParser, FormParser]
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeUpSerializer
+    permission_classes = [AllowAny]

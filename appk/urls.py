@@ -77,4 +77,16 @@ urlpatterns = [
 
 
 
+
+path('api/activeaccountEmp/<str:id>/', activeaccountEmp.as_view(), name='user'),
+path('api/closeAccountEmp/<str:id>/', closeAccountEmp.as_view(), name='user'),
+
+
+
+path('api/employeesDetail/<int:pk>/', EmployeeDetails.as_view(), name='employee-detail'),
+
+
+
+
+
 ]
