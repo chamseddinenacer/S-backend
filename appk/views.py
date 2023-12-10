@@ -46,12 +46,12 @@ class EmployeeSignupView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         
-        # Create the user using the serializer
+      
         user_serializer = UserSerializer(data=user_data)
         user_serializer.is_valid(raise_exception=True)
         user = user_serializer.save()
 
-        # Save the employee with the user object
+       
         employee = serializer.save(user=user)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -64,7 +64,7 @@ class EmployeeLoginView(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
-        # Récupérer les données de la requête POST
+        
         username = request.data.get('username')
         password = request.data.get('password')
 
@@ -340,8 +340,8 @@ class EnvoyerSMS_AddEmploye(APIView):
         # SMS_pass = 'chamsa12345'
 
         # Vos informations d'identification Twilio
-        # account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
-        # auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
+        # account_sid = 'AC99ae11426ce10357829fc24cf0125a58'
+        # auth_token = '07fbaf904fd0ecefe45de6ed2f05f5e1'
 
         # Initialiser le client Twilio
         client = Client(account_sid, auth_token)
@@ -352,7 +352,7 @@ class EnvoyerSMS_AddEmploye(APIView):
         # Envoyer le SMS
         message = client.messages.create(
             body=message_body,
-            from_='+19209455841',  # Numéro Twilio autorisé
+            from_='+17086956261',  # Numéro Twilio autorisé
             # to = '+216' + str(recipient_list)   
             to = '+216' + str(recipient_list)
         )
@@ -370,8 +370,8 @@ class EnvoyerSMS_Rest_Pass(APIView):
         recipient_list = request.data.get('recipient_list')
         SMS_verification = request.data.get('codesms')
         # SMS_verification = str(randint(100000,999999))
-        # account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
-        # auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
+        # account_sid = 'AC99ae11426ce10357829fc24cf0125a58'
+        # auth_token = '07fbaf904fd0ecefe45de6ed2f05f5e1'
       
 
         client = Client(account_sid, auth_token)
@@ -381,7 +381,7 @@ class EnvoyerSMS_Rest_Pass(APIView):
         message = client.messages \
             .create(
                 body='\nYour secret code for Stagi reset Password is: '+SMS_verification,
-                from_ =  '+19209455841',
+                from_ =  '+17086956261',
                 to = '+216' + str(recipient_list)
 
                 
@@ -502,8 +502,8 @@ class Send_SMS_To_Admin(APIView):
 
 
         # Vos informations d'identification Twilio
-        # account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
-        # auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
+        # account_sid = 'AC99ae11426ce10357829fc24cf0125a58'
+        # auth_token = '07fbaf904fd0ecefe45de6ed2f05f5e1'
 
         # Initialiser le client Twilio
         client = Client(account_sid, auth_token)
@@ -526,7 +526,7 @@ class Send_SMS_To_Admin(APIView):
         # Envoyer le SMS
         message = client.messages.create(
             body=message_alerte_conge,
-            from_='+19209455841',  # Numéro Twilio autorisé
+            from_='+17086956261',  # Numéro Twilio autorisé
             # to = '+216' + str(recipient_list)   
             to = '+216' + str(num_admin)
         )
@@ -548,8 +548,8 @@ class Send_SMS_Accept_To_Employe(APIView):
         recipient_list = request.data.get('recipient_list')
  
         # Vos informations d'identification Twilio
-        # account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
-        # auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
+        # account_sid = 'AC99ae11426ce10357829fc24cf0125a58'
+        # auth_token = '07fbaf904fd0ecefe45de6ed2f05f5e1'
 
         # Initialiser le client Twilio
         client = Client(account_sid, auth_token)
@@ -570,7 +570,7 @@ class Send_SMS_Accept_To_Employe(APIView):
         # Envoyer le SMS
         message = client.messages.create(
             body=message_acceptation,
-            from_='+19209455841',  # Numéro Twilio autorisé
+            from_='+17086956261',  # Numéro Twilio autorisé
             # to = '+216' + str(recipient_list)   
             to = '+216' + str(recipient_list)
         )
@@ -592,8 +592,8 @@ class Send_SMS_Rejecte_To_Employe(APIView):
         recipient_list = request.data.get('recipient_list')
  
         # Vos informations d'identification Twilio
-        # account_sid = 'AC55c1cbbbce4ff11e72cfebf10e60c873'
-        # auth_token = '49f351d53a0c12ce5897b5a1aaccd9d7'
+        # account_sid = 'AC99ae11426ce10357829fc24cf0125a58'
+        # auth_token = '07fbaf904fd0ecefe45de6ed2f05f5e1'
 
         # Initialiser le client Twilio
         client = Client(account_sid, auth_token)
@@ -613,7 +613,7 @@ class Send_SMS_Rejecte_To_Employe(APIView):
         # Envoyer le SMS
         message = client.messages.create(
             body=message_acceptation,
-            from_='+19209455841',  # Numéro Twilio autorisé
+            from_='+17086956261',  # Numéro Twilio autorisé
             # to = '+216' + str(recipient_list)   
             to = '+216' + str(recipient_list)
         )
